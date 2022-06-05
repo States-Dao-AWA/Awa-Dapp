@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { GuessService } from './guess.service';
 import { GuessRequestDto } from './dto/guess.request';
 
@@ -7,7 +7,7 @@ export class GuessController {
   constructor(private readonly guessSevice: GuessService) {}
 
   @Post()
-  guess(guessRequestDto: GuessRequestDto) {
+  guess(@Body() guessRequestDto: GuessRequestDto) {
     return this.guessSevice.guess(guessRequestDto);
   }
 }
