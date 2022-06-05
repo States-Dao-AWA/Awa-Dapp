@@ -6,6 +6,7 @@ COzA is a Dapp built using NEAR and Graph protocol. It's platform for raising aw
 
 ## Origin
 Graph Day Hackathon 2022
+- [Demo Video](https://studio.youtube.com/video/HTE6Jwwb8eg/edit) 
 
 ## User Flow: Guessing game
 ![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/1A.png?raw=true)
@@ -13,15 +14,10 @@ Graph Day Hackathon 2022
 ![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/3A.png?raw=true)
 
 ## AWA tokenomics
-![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/figure1.png?raw=true)
+![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure1.png?raw=true)
 
 ## Architecture
-![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/figure2.png?raw=true)
-
-## Demo Video 
-For Graph Day Hackathon
-
-- [Amazing GitHub Template](https://studio.youtube.com/video/HTE6Jwwb8eg/edit) 
+![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure2.png?raw=true)
 
 
 
