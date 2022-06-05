@@ -1,4 +1,11 @@
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
 export class GuessRequestDto {
+  @IsString()
+  @IsNotEmpty()
   address: string;
-  number: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  answer: number;
 }

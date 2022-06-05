@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { GuessService } from './guess.service';
 import { GuessRequestDto } from './dto/guess.request';
 
@@ -7,6 +13,7 @@ export class GuessController {
   constructor(private readonly guessSevice: GuessService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async guess(@Body() guessRequestDto: GuessRequestDto) {
     return this.guessSevice.guess(guessRequestDto);
   }
