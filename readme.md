@@ -14,10 +14,10 @@ Graph Day Hackathon 2022
 ![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/3A.png?raw=true)
 
 ## AWA tokenomics
-![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure1.png?raw=true)
+![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure1-new.png?raw=true)
 
 ## Architecture
-![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure2.png?raw=true)
+![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/Figure2-new.png?raw=true)
 
 
 
