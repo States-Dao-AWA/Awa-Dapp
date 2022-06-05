@@ -27,11 +27,7 @@ export class GuessService {
   async guess(guessRequestDto: GuessRequestDto) {
     const { address, answer } = guessRequestDto;
 
-    const isFirstGuess = await this.isFirstGuess(address);
-
-    if (!isFirstGuess) {
-      throw new BadRequestException('not the first time');
-    }
+    await this.isFirstGuess(address);
 
     const yesterdayDate = await this.getYesterdayDate();
 
@@ -44,7 +40,7 @@ export class GuessService {
     await this.transferReward(address);
   }
 
-  private async isFirstGuess(address: string): Promise<boolean> {
+  private async isFirstGuess(address: string): Promise<void> {
     const contract = await this.contract.getContract();
 
     const response = await (contract as any).get_user_last_guess({
@@ -59,10 +55,9 @@ export class GuessService {
       const today = ('' + nowTime.getDate()).slice(-2);
 
       if (responseDay === today) {
-        return false;
+        throw new BadRequestException('not the first time');
       }
     }
-    return true;
   }
 
   private async getYesterdayDate(): Promise<string> {
