@@ -7,7 +7,7 @@ export class GuessController {
   constructor(private readonly guessSevice: GuessService) {}
 
   @Post()
-  guess(@Body() guessRequestDto: GuessRequestDto) {
+  async guess(@Body() guessRequestDto: GuessRequestDto) {
     return this.guessSevice.guess(guessRequestDto);
   }
 }
