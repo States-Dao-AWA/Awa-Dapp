@@ -9,11 +9,16 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import fetch from 'cross-fetch';
-
-const APIURL = 'https://api.thegraph.com/subgraphs/name/yun-sangho/g';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GuessService {
+  private readonly graphAPI;
+
+  constructor(private readonly configService: ConfigService) {
+    this.graphAPI = this.configService.get('GRAPH_API');
+  }
+
   async guess(guessRequestDto: GuessRequestDto) {
     const { address, number } = guessRequestDto;
 
@@ -57,7 +62,7 @@ export class GuessService {
       }`;
 
     const client = new ApolloClient({
-      link: new HttpLink({ uri: APIURL, fetch }),
+      link: new HttpLink({ uri: this.graphAPI, fetch }),
       cache: new InMemoryCache(),
     });
 
