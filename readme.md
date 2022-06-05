@@ -27,16 +27,27 @@ Graph Day Hackathon 2022
 3. Go to /near yarn install, yarn dev
 
 
-## Tools
+## Resources
 
-- [Amazing GitHub Template](https://github.com/dec0dOS/amazing-github-template#readme) - Useful README.md, LICENSE, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, GitHub Issues, Pull Requests and Actions templates to jumpstart your projects.
-- [Common Readme](https://github.com/noffle/common-readme#readme) - A common readme style for Node. Includes a guide and a readme generator.
-- [Feedmereadmes](https://github.com/lappleapple/feedmereadmes#readme) - README editing and project analysis/feedback.
+- [Near+Graph Tutorial](https://github.com/linear-protocol/linear-subgraph/blob/docs%2Fnear-subgraph-tutorial/docs/tutorial.md) - Building Production-Ready Subgraphs on NEAR
+If you're building your DApps on NEAR and are interested to adopt The Graph technology to empower the frontend and analytics of your project, this tutorial is exactly for you.
+- [NEAR Docs](https://docs.near.org/docs/tutorials/contracts/nfts/introduction) - Take a look at the variety of Tutorials to help you become a better developer on NEAR!
+- [Getting started with NEAR](https://camiinthisthang.hashnode.dev/the-complete-guide-to-getting-started-with-the-graph) - By  @camiinthisthang
+- [Subgraph Repo](https://github.com/camiinthisthang/thegraph-workshop/blob/main/README.md) - @camiinthisthang
 
 ## Contribute
 
-Contributions are always welcome!
-Please read the [contribution guidelines](contributing.md) first.
+CO2 awareness, needs your contributions to become a reality!
+Please reach out to our any of our team origin devs and PMs to see how [contribution guidelines](contributing.md) first.
+
+## TEAM
+- [@whamsicore](https://github.com/whamsicore) - PM + Game/designer
+- [@ionc635](https://github.com/ionc635) - Backend
+- [@SeungWookHan](https://github.com/SeungWookHan) - NEAR + Fullstack
+- [@yun-sangho](https://github.com/yun-sangho) - NEAR + Graph + Fullstack
+- [@jordan510](https://github.com/jordan510) - QA + Marketing
+- [@shawnthepark](https://github.com/shawnthepark) - Business + Hackathon Relations 
+
 
 ## License
 
