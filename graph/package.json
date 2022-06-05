@@ -1,0 +1,17 @@
+{
+  "name": "gstbnb",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "env-cmd --no-override npm run deploy:hosted",
+    "deploy:hosted": "graph deploy $SLUG --product hosted-service --access-token $ACCESS_TOKEN",
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.30.3",
+    "@graphprotocol/graph-ts": "0.27.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
+  }
+}

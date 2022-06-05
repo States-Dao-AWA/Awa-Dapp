@@ -1,0 +1,12 @@
+type TokenAmount @entity {
+  id: ID!
+  amount: BigDecimal!
+}
+
+type Transfer @entity {
+  id: ID!
+  to: Bytes!
+  from: Bytes!
+  date: String!
+  amount: BigDecimal!
+}
