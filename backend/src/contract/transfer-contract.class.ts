@@ -34,7 +34,7 @@ export class TransferContract {
 
     const contract = new nearAPI.Contract(account, this.testnet, {
       viewMethods: ['ft_balance_of'],
-      changeMethods: ['ft_transfer'],
+      changeMethods: ['ft_transfer', 'storage_deposit'],
     });
     return contract;
   }

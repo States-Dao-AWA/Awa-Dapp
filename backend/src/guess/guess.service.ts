@@ -131,6 +131,12 @@ export class GuessService {
 
   private async transferReward(address: string): Promise<void> {
     const transferContract = await this.transferContract.getTransferContract();
+    await (transferContract as any).storage_deposit({
+      args: {
+        account_id: address,
+      },
+      amount: '1250000000000000000000',
+    });
 
     await (transferContract as any).ft_transfer({
       args: {
