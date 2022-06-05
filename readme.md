@@ -8,6 +8,7 @@ COzA is a Dapp built using NEAR and Graph protocol. It's platform for raising aw
 Graph Day Hackathon 2022
 
 ## UX
+![alt text](https://github.com/States-Dao-AWA/Awa-Dapp/blob/main/design-files/1A.png?raw=true)
 
 ## Install
 1. Req: Node 18v (latest)
