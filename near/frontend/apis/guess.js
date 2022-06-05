@@ -8,12 +8,14 @@ const URL = `${DOMAIN}/guess`;
  * @returns response
  */
 export async function postGuess(body) {
+  console.log(body);
   try {
     const res = await axios({
       method: "post",
       url: URL,
       headers: {
         accept: "application/json",
+        "Content-Type": "application/json",
       },
       data: JSON.stringify(body),
     });

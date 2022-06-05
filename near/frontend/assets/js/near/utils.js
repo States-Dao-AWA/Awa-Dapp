@@ -13,6 +13,7 @@ export async function initContract() {
     )
   );
 
+  const account = await near.account(nearConfig.contractName);
   // Initializing Wallet based Account. It can work with NEAR testnet wallet that
   // is hosted at https://wallet.testnet.near.org
   window.walletConnection = new WalletConnection(near);
@@ -45,6 +46,10 @@ export function login() {
   // This works by creating a new access key for the user's account and storing
   // the private key in localStorage.
   window.walletConnection.requestSignIn(nearConfig.contractName);
+  // window.contract.storage_deposit({
+  //   args: {},
+  //   amount: "1250000000000000000000",
+  // });
 }
 
 export const DOMAIN = "http://0.0.0.0:3000";

@@ -12,7 +12,7 @@ html {
   --primary: #ff585d;
   --secondary: #0072ce;
 
-  background-color: var(--bg);
+  background-color: black;
   color: var(--fg);
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
@@ -27,8 +27,15 @@ body {
 
 main {
   margin: 0 auto;
-  max-width: 26em;
+  max-width: 40em;
   text-align: justify;
+}
+
+input,
+select {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -37,7 +44,27 @@ h1 {
   background-repeat: no-repeat;
   background-size: auto 1.5em;
   margin-top: 0;
-  padding: 3.5em 0 0.5em;
+  padding: 0em 0 0.5em;
+  text-align: center;
+}
+
+h2 {
+  /* background-image: url(../img/logo-black.svg); */
+  background-position: center 1em;
+  background-repeat: no-repeat;
+  background-size: auto 1.5em;
+  margin-top: 0;
+  padding: 1.5em 0 0.5em;
+  text-align: center;
+}
+
+h3 {
+  /* background-image: url(../img/logo-black.svg); */
+  background-position: center 1em;
+  background-repeat: no-repeat;
+  background-size: auto 1.5em;
+  margin-top: 0;
+  padding: 0em 0 0.5em;
   text-align: center;
 }
 
@@ -74,7 +101,7 @@ button {
   border: none;
   color: #efefef;
   cursor: pointer;
-  padding: 0.3em 0.75em;
+  padding: 0.6em 0.75em;
   transition: transform 30ms;
 }
 button:hover,

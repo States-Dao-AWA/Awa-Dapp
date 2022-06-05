@@ -2,16 +2,25 @@ import "regenerator-runtime/runtime";
 import React from "react";
 
 import "./assets/css/global.css";
-import cozaLogo from "./assets/img/cozA.jpg";
+import cozaLogo from "./assets/img/cozaLogo2.jpg";
 
 import { login, logout } from "./assets/js/near/utils";
 import { postGuess } from "./apis/guess";
 
 export default function App() {
   const [number, setNumber] = React.useState(0);
-  const [address, serAddress] = React.useState(window.accountId);
+  const [balance, setBalance] = React.useState(0);
 
-  const handleChange = (event) => {
+  React.useEffect(async () => {
+    if (window.walletConnection.isSignedIn()) {
+      const balance = await window.contract.ft_balance_of({
+        account_id: window.accountId,
+      });
+      setBalance(balance / 10000);
+    }
+  }, []);
+
+  const handleChange = async (event) => {
     const { valueAsNumber, min, max } = event.target;
     if (valueAsNumber < +min) {
       alert("Min value reached");
@@ -29,17 +38,10 @@ export default function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const balance = await window.contract.ft_balance_of({
-        account_id: window.accountId,
+      const { message } = await postGuess({
+        answer: number,
+        address: window.accountId,
       });
-      if (+balance === 0) {
-        await window.contract.storage_deposit({
-          args: {},
-          amount: "1250000000000000000000",
-        });
-      }
-
-      const { message } = await postGuess({ answer: number, address });
       if (message === "not the first time") {
         return alert("Sorry! You aleady done!");
       }
@@ -51,7 +53,7 @@ export default function App() {
       if (message === "down") {
         return alert("Sorry! You guessed wrong!(DOWN!)");
       }
-
+      setBalance(balance + 5);
       return alert("Congratulations! You guessed correctly.");
     } catch (err) {
       console.log(err, "Fail to request");
@@ -62,10 +64,29 @@ export default function App() {
   if (!window.walletConnection.isSignedIn()) {
     return (
       <main>
-        <img src={cozaLogo} alt="cozaLogo" />
-        <h1>Crypto projects are reducing XXX amount of CO2 emmision / day</h1>
-        <p style={{ textAlign: "center", marginTop: "2.5em" }}>
-          <button onClick={login}>Sign in</button>
+        <img
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "2.5rem",
+            width: "50%",
+          }}
+          src={cozaLogo}
+          alt="cozaLogo"
+        />
+        <h1>
+          <span style={{ color: "#82EB5A" }}>COzA</span> is a dApp for raising
+          awareness, <br />
+          for crypto and carbon emissions, <br />
+          through a viral guessing game of how much crypto{" "}
+          <span style={{ color: "#82EB5A" }}>
+            projects are reducing emissions.
+          </span>
+          <br /> Guess-to-Earn. AWA Token!
+        </h1>
+        <p style={{ textAlign: "center", marginTop: "1.5em" }}>
+          <button onClick={login}>Let's get started</button>
         </p>
       </main>
     );
@@ -78,15 +99,19 @@ export default function App() {
         Sign out
       </button>
       <main>
-        <h1>
-          {
-            " " /* React trims whitespace around tags; insert literal space character when needed */
-          }
-          Hey!! {window.accountId}!
-        </h1>
+        <br />
+        <h2>
+          Hey!! <span style={{ color: "#82EB5A" }}>{window.accountId}!</span>{" "}
+        </h2>
+        <h3>
+          Guess how much Co2 is saved by crypto protocols! <br />
+          If you guess right,{" "}
+          <span style={{ color: "#82EB5A" }}>you earn AWA Token</span>(Awareness
+          Token)!!
+        </h3>
         <form onSubmit={handleSubmit}>
           <label>
-            Stepn:
+            StepN: <br />
             <input
               type="number"
               name="stepn-guess"
@@ -100,7 +125,7 @@ export default function App() {
         </form>
         <form>
           <label>
-            Something:
+            DreamN: <br />
             <input type="number" name="guess" min="0" max="10000" disabled />
           </label>
           <button type="submit" disabled>
@@ -109,7 +134,7 @@ export default function App() {
         </form>
         <form>
           <label>
-            Something2:
+            StatesDAO: <br />
             <input type="number" name="guess" min="0" max="10000" disabled />
           </label>
           <button type="submit" disabled>
@@ -118,6 +143,13 @@ export default function App() {
         </form>
         <br />
       </main>
+      <div
+        style={{
+          width: "100%",
+          height: "20px",
+          backgroundColor: "white",
+        }}></div>
+      <h2>My AWA Token Balance: {balance}</h2>
     </>
   );
 }
