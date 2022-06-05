@@ -23,10 +23,12 @@
   "dependencies": {
     "@apollo/client": "^3.6.6",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.1.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "cross-fetch": "^3.1.5",
     "graphql": "^16.5.0",
+    "near-api-js": "^0.44.2",
     "react": "^18.1.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
