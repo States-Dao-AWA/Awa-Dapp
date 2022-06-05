@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
     GuessModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'prod' ? '.prod.env' : '.dev.env',
+      envFilePath: process.env.NODE_ENV === 'prod' ? '.env.prod' : '.env.dev',
     }),
   ],
 })
