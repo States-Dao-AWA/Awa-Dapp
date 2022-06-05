@@ -1,0 +1,25 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GstBnb
+    network: bsc
+    source:
+      address: "0x4a2c860cEC6471b9F5F5a336eB4F38bb21683c98"
+      abi: GstBnb
+      startBlock: 18000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - TokenAmount
+        - Transfer
+      abis:
+        - name: GstBnb
+          file: ./abis/GstBnb.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/index.ts
