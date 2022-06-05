@@ -50,7 +50,6 @@ Please reach out to our any of our team origin devs and PMs to see how [contribu
 
 
 ## License
-
-[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
+FOSS
 
 To the extent possible under law, [Matias Singers](https://mts.io) has waived all copyright and related or neighboring rights to this work.
