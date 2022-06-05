@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isFirst } from './guess.mocks';
 import { GuessRequestDto } from './dto/guess.request';
 import {
   ApolloClient,
@@ -10,39 +9,65 @@ import {
 } from '@apollo/client';
 import fetch from 'cross-fetch';
 import { ConfigService } from '@nestjs/config';
+import { Contract } from '../contract/contract.class';
+import { TransferContract } from '../contract/transfer-contract.class';
 
 @Injectable()
 export class GuessService {
   private readonly graphAPI;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly contract: Contract,
+    private readonly transferContract: TransferContract,
+  ) {
     this.graphAPI = this.configService.get('GRAPH_API');
   }
 
   async guess(guessRequestDto: GuessRequestDto) {
-    const { address, number } = guessRequestDto;
+    const { address, answer } = guessRequestDto;
 
-    // TODO 1-1. Is this address your first time?, We have to call the smart contract.
-    if (!isFirst) {
+    const isFirstGuess = await this.isFirstGuess(address);
+
+    if (!isFirstGuess) {
       throw new BadRequestException('not the first time');
     }
 
-    const dateString = await this.getTodayDate();
+    const yesterdayDate = await this.getYesterdayDate();
 
-    const data = await this.getGraphData(dateString);
+    const graphData = await this.getGraphData(yesterdayDate);
 
-    const amounts = await this.getAmounts(data);
+    const amounts = await this.getAmounts(graphData);
 
-    if (!(number < +amounts * 1.05 && number > +amounts * 0.95)) {
-      throw new BadRequestException('incorrect');
-    }
+    await this.compareAnswer(answer, amounts);
 
-    // TODO 1-3. If the error range is within 5%, reward is provided. Request contract.
-    // TODO Update the status of the user's address. Request contract.
+    await this.transferReward(address);
   }
 
-  private async getTodayDate(): Promise<string> {
+  private async isFirstGuess(address: string): Promise<boolean> {
+    const contract = await this.contract.getContract();
+
+    const response = await (contract as any).get_user_last_guess({
+      owner_id: address,
+    });
+
+    if (response) {
+      const responseTime = new Date(response);
+      const nowTime = new Date();
+
+      const responseDay = ('' + responseTime.getDate()).slice(-2);
+      const today = ('' + nowTime.getDate()).slice(-2);
+
+      if (responseDay === today) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private async getYesterdayDate(): Promise<string> {
     const today = new Date();
+    today.setDate(today.getDate() - 1);
 
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -51,7 +76,7 @@ export class GuessService {
   }
 
   private async getGraphData(
-    dateString: string,
+    yesterdayDate: string,
   ): Promise<ApolloQueryResult<any>> {
     const tokensQuery = `query($id: String)
       {
@@ -69,28 +94,64 @@ export class GuessService {
     const data = await client.query({
       query: gql(tokensQuery),
       variables: {
-        id: dateString,
+        id: yesterdayDate,
       },
     });
 
     return data;
   }
 
-  private async getAmounts(data): Promise<number> {
+  private async getAmounts(graphData): Promise<number> {
     let result: number;
 
-    if (data.data.tokenAmount.length > 2) {
+    if (graphData.data.tokenAmount.length > 2) {
       result =
-        (data.data.tokenAmounts.reduce((a, b) => +a.amount + +b.amount, 0) *
+        (graphData.data.tokenAmounts.reduce(
+          (a, b) => +a.amount + +b.amount,
+          0,
+        ) *
           (15 / 9) *
           0.0416) /
         1440;
     } else {
-      result = data.data.tokenAmount.amount
-        ? (data.data.tokenAmount.amount * (15 / 9) * 0.0416) / 1440
+      result = graphData.data.tokenAmount.amount
+        ? (graphData.data.tokenAmount.amount * (15 / 9) * 0.0416) / 1440
         : 0;
     }
 
     return result;
+  }
+
+  private async compareAnswer(answer: number, amounts: number): Promise<void> {
+    if (!(answer < +amounts * 1.05 && answer > +amounts * 0.95)) {
+      if (answer > +amounts) {
+        throw new BadRequestException('down');
+      }
+
+      if (answer < +amounts) {
+        throw new BadRequestException('up');
+      }
+    }
+  }
+
+  private async transferReward(address: string): Promise<void> {
+    const transferContract = await this.transferContract.getTransferContract();
+
+    await (transferContract as any).ft_transfer({
+      args: {
+        receiver_id: address,
+        amount: '50000',
+      },
+      amount: 1,
+    });
+
+    const contract = await this.contract.getContract();
+
+    await (contract as any).set_user_last_guess({
+      args: {
+        owner_id: address,
+        timestamp: Date.now(),
+      },
+    });
   }
 }
