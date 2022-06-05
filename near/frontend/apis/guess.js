@@ -9,14 +9,17 @@ const URL = `${DOMAIN}/guess`;
  */
 export async function postGuess(body) {
   try {
-    const res = await axios.post(URL, JSON.stringify(body), {
+    const res = await axios({
+      method: "post",
+      url: URL,
       headers: {
-        "Content-Type": `application/json`,
+        accept: "application/json",
       },
+      data: JSON.stringify(body),
     });
 
-    return res.data.result;
+    return res.data;
   } catch (error) {
-    throw new Error(error);
+    return error.response.data;
   }
 }
